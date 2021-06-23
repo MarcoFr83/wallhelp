@@ -18,6 +18,17 @@
 {
 font: normal 10px Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
 }
+.p1red
+{
+font: normal 10px Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
+color : #ff0000;
+}
+.p1green
+{
+font: normal 10px Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
+color : #1b4706;
+}
+
 .p2
 {
 font: normal 12px Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;

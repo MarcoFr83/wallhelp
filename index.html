@@ -34,26 +34,30 @@
           await window.ethereum.send('eth_requestAccounts');
           window.web3 = new Web3(window.ethereum);
           tipper_addresses =  await web3.eth.getAccounts()
-
-          soldeAccount = await web3.eth.getBalance(tipper_addresses[0])
           nameProvider = getProviderName(await web3.eth.getChainId());
-          renderMessage("Ca$h :" + web3.utils.fromWei(soldeAccount) + " ETH", "#solde")
+          getSolde(0)
           let urlEtherUser = nameProvider.explorer + "/address/"+ tipper_addresses
           let urlImgEther = "<a href='" + urlEtherUser + "' target='_blank'><img src='./img/etherscan.png' alt='Etherscan' class='imgetherscan' width='200' height='80'></a>"
 
-          renderMessage(urlImgEther, "#etherscanview")
-          renderMessage(nameProvider.name, "#currentNetWork")
-
-
-            
+          renderMessage(urlImgEther, "#etherscanview","p2")
+          renderMessage(nameProvider.name, "#currentNetWork","p2")
 
         } else { alert("Install Metamask")}
       };
 
 
       const tip = async () => {
-          renderMessage('Wating user choice ... (pleeeaaase confirm !)', '#messageTx')
-          const my_address = document.querySelector('#toAddress').value;
+          renderMessage('Wating user choice ... (pleeeaaase confirm !)', '#messageTx',"p1")
+            const my_address = document.querySelector('#toAddress').value;
+            try {
+              const address = web3.utils.toChecksumAddress(my_address)
+            } catch(e) { 
+              renderMessage("Should I buy U a right hand 4 XMas ? check address pls", '#messageTx', "p1red")
+              console.error('invalid ethereum address', e.message) 
+              return
+            }
+
+          
           const ethTip = document.querySelector('#tips').value
           tipper_addresses = await web3.eth.getAccounts();
 
@@ -65,19 +69,17 @@
           })
           .once('transactionHash', (hash) => {
               txHash = hash 
-console.log(hash)
-              renderMessage('Processing ... ',"#messageTx")
+              renderMessage('Processing ... ',"#messageTx", "p1")
           })
           .once('confirmation', (receipt) => {
-              renderMessage("Thanks for so much generosity!! <br/>Tx: " + txHash +"", "#messageTx");
-console.log(receipt)
+              getSolde(1)
             })
           .once('receipt', (receipt) => {
-console.log(receipt)
+            renderMessage("Thanks for so much generosity!! Tx: <br />" + txHash +"", "#messageTx", "p1green");
           })
           .on('error', (err) => {
-              renderMessage(err.message,'#messageTx')
-console.log(err)
+              renderMessage(err.message,'#messageTx',"p1red")
+              console.log(err)
             })
       }
 
@@ -90,9 +92,19 @@ console.log(err)
         window.location.reload();
       }
       //********************************************************************
-      const renderMessage = (message, htmlSelector) => {
+      const renderMessage = (message, htmlSelector, pcss) => {
         const messageEl = document.querySelector(htmlSelector)
-        messageEl.innerHTML = message
+        messageEl.innerHTML = "<p class='" + pcss +"'>" + message +"</p>"
+      }
+
+      const getSolde= async (when) => {
+        renderMessage("Updating ca$h balance ...", "#messageTx", "p1red");
+        soldeAccount = await web3.eth.getBalance(tipper_addresses[0])
+        renderMessage("Ca$h :" + web3.utils.fromWei(soldeAccount) + " ETH", "#solde")
+        if (when==0) {
+          renderMessage("", "#messageTx");
+        }
+console.log("Wei Solde = " +soldeAccount)        
       }
 
       const getProviderName= (chainId) => {
@@ -146,10 +158,6 @@ console.log(err)
             
           } 
         }
-
-
-        
-
 
       document.getElementById("tip-button").addEventListener("click", tip);
     </script>
