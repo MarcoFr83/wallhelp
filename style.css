@@ -1,0 +1,65 @@
+
+.tip-button {
+    width: 150px;
+    height: 45px;
+    background-size: 100%;
+    background-image: url('../img/1_pay_mm_off.png');
+    cursor: pointer;
+  }
+  
+.tip-button:hover {
+    background-image: url('../img/1_pay_mm_over.png');
+  }
+  
+.tip-button:active {
+    background-image: url('../img/1_pay_mm_off.png');
+  }
+.p1
+{
+font: normal 10px Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
+}
+.p2
+{
+font: normal 12px Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
+}
+
+.global
+{
+  display:flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  
+}
+.globalgauche
+{
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 50px;
+  padding-left: 80px;
+}
+.globaldroite
+{
+  background: #efefef; 
+  border: 1px solid #999;    
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 50px;
+  padding-left: 80px;
+}
+.container {
+  position: relative;
+  
+}
+
+.center {
+  position: absolute;
+  top: 60%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+}
+
+imgetherscan { 
+  width: 80%;
+  height: auto;
+}
