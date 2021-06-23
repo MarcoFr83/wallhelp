@@ -59,6 +59,16 @@
           renderMessage('Wating user choice ... (pleeeaaase confirm !)', '#messageTx')
           const my_address = document.querySelector('#toAddress').value;
           const ethTip = document.querySelector('#tips').value
+// CHECKING ADDRESS w/ utils:
+//web3.utils.isAddress(ethTip)->bool;          
+/* ou w/checksum
+try {
+  const address = web3.utils.toChecksumAddress(rawInput)
+} catch(e) { 
+  console.error('invalid ethereum address', e.message) 
+}
+*/
+
           tipper_addresses = await web3.eth.getAccounts();
 
           await web3.eth.sendTransaction({

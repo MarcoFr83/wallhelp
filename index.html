@@ -28,6 +28,7 @@
       let chainId           = ""
       let soldeAccount      = ""
       let tipper_addresses
+      let nameProvider
       window.onload     = async () => {
         if (window.ethereum) {
           await window.ethereum.send('eth_requestAccounts');
@@ -35,13 +36,13 @@
           tipper_addresses =  await web3.eth.getAccounts()
 
           soldeAccount = await web3.eth.getBalance(tipper_addresses[0])
-          let nameProvider = getProviderName(await web3.eth.getChainId());
+          nameProvider = getProviderName(await web3.eth.getChainId());
           renderMessage("Ca$h :" + web3.utils.fromWei(soldeAccount) + " ETH", "#solde")
-          let urlEtherUser = "https://" + nameProvider + ".etherscan.io/address/"+ tipper_addresses
+          let urlEtherUser = nameProvider.explorer + "/address/"+ tipper_addresses
           let urlImgEther = "<a href='" + urlEtherUser + "' target='_blank'><img src='./img/etherscan.png' alt='Etherscan' class='imgetherscan' width='200' height='80'></a>"
 
           renderMessage(urlImgEther, "#etherscanview")
-          renderMessage(nameProvider, "#currentNetWork")
+          renderMessage(nameProvider.name, "#currentNetWork")
 
 
             
@@ -96,22 +97,52 @@ console.log(err)
 
       const getProviderName= (chainId) => {
         switch(chainId) {
-            case 1: return 'Ethereum Main Network'
+            case 1: 
+            return {
+              "name":"Ethereum Main Network",
+              "explorer":"https://etherscan.io"
+            }
                   break;
-            case 3: return 'Ropsten'
+            case 3: 
+            return {
+              "name":"Ropsten",
+              "explorer":"https://ropsten.etherscan.io"
+            }
                   break;
-            case 4: return 'Rinkeby'
+            case 4: 
+            return {
+              "name":"Rinkeby",
+              "explorer":"https://rinkeby.etherscan.io"
+            }
                   break;
-            case 5: return 'Goerli'
+            case 5: 
+            return {
+              "name":"Goerli",
+              "explorer":"https://goerli.etherscan.io"
+            }
                   break;
-            case 42: return 'Kovan'
+            case 42: 
+            return {
+              "name":"Kovan",
+              "explorer":"https://kovan.etherscan.io"
+            }
                   break;
-            case 97: return 'Binance Testnet'
+            case 97: 
+            return {
+              "name":"Binance Smart Chain Testnet",
+              "explorer":"https://testnet.bscscan.com"
+            }
                   break;      
-            case 80001: return 'Mumbai'
+            case 80001: 
+            return 'Mumbai'
                   break;      
 
-            default: return 'another Network!'
+            default:             
+            return {
+              "name":"Not yet registered ...",
+              "explorer":"https://chainlist.org"
+            }
+
             
           } 
         }
